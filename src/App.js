@@ -102,12 +102,57 @@ function App() {
               required
             />
           </div>
+          <div className="form-group" style={{ display: 'flex', alignItems: 'center' }}>
+  <label style={{ marginRight: '10px' }}>Day</label> {/* Adjust margin as needed */}
+  <input
+    type="checkbox"
+    name="is_day"
+    checked={formData.is_day}
+    onChange={handleChange}
+  />
+</div>
           <div className="form-group">
             <label>Eco</label>
             <input
               type="number"
               name="eco"
               value={formData.eco}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Tent</label>
+            <input
+              type="number"
+              name="tent"
+              value={formData.tent}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Regular</label>
+            <input
+              type="number"
+              name="regular"
+              value={formData.regular}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Glamp</label>
+            <input
+              type="number"
+              name="glamp"
+              value={formData.glamp}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Sky</label>
+            <input
+              type="number"
+              name="sky"
+              value={formData.sky}
               onChange={handleChange}
             />
           </div>
@@ -168,51 +213,8 @@ function App() {
               onChange={handleChange}
             />
           </div>
-          <div className="form-group">
-            <label>Tent</label>
-            <input
-              type="number"
-              name="tent"
-              value={formData.tent}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Regular</label>
-            <input
-              type="number"
-              name="regular"
-              value={formData.regular}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Glamp</label>
-            <input
-              type="number"
-              name="glamp"
-              value={formData.glamp}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Sky</label>
-            <input
-              type="number"
-              name="sky"
-              value={formData.sky}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Day</label>
-            <input
-              type="checkbox"
-              name="is_day"           // Changed from isDay
-              checked={formData.is_day}
-              onChange={handleChange}
-            />
-          </div>
+         
+         
           <button type="submit">Submit</button>
         </form>
       </div>
