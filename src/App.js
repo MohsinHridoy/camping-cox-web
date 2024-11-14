@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
 import logo from './logo.jpeg';
+import camp1 from './images/camp1.jpeg'; // Import your camping images
+import camp2 from './images/camp2.jpeg';
+
 import axios from 'axios';
 
 function App() {
@@ -11,13 +14,17 @@ function App() {
     person: '',
     phone: '',
     advance: '',
-    due_bill: '',        // Changed from dueBill
-    last_digits: '',      // Changed from lastDigits
+    due_bill: '',
+    last_digits: '',
     tent: '',
     regular: '',
     glamp: '',
     sky: '',
-    is_day: false,        // Changed from isDay
+    lakepod: '',
+    is_day: false,
+    is_customized: '',
+    nid_no: '',
+    customized_details: '',
   });
 
   const handleChange = (e) => {
@@ -31,35 +38,30 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Ensure required fields are not empty before submitting
     if (!formData.date || !formData.name || !formData.person || !formData.advance) {
       alert('Please fill out the required fields: Date, Name, Person, and Advance.');
       return;
     }
 
-    // Generate a unique ID (using timestamp + random number)
     const uniqueId = `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
-    // Prepare the form data, including the generated unique ID
     const transformedData = {
       ...formData,
-      id: uniqueId,  // Add the unique ID to the form data
-      eco: formData.eco === '' || formData.eco === null ? 0 : parseInt(formData.eco, 10),  // Default to 0 if empty or null
-      person: formData.person === '' || formData.person === null ? 0 : parseInt(formData.person, 10),  // Default to 0 if empty or null
-      advance: formData.advance === '' || formData.advance === null ? 0 : parseInt(formData.advance, 10),  // Default to 0 if empty or null
-      due_bill: formData.due_bill === '' || formData.due_bill === null ? 0 : parseInt(formData.due_bill, 10),  // Default to 0 if empty or null
-      tent: formData.tent === '' || formData.tent === null ? 0 : parseInt(formData.tent, 10),  // Default to 0 if empty or null
-      regular: formData.regular === '' || formData.regular === null ? 0 : parseInt(formData.regular, 10),  // Default to 0 if empty or null
-      glamp: formData.glamp === '' || formData.glamp === null ? 0 : parseInt(formData.glamp, 10),  // Default to 0 if empty or null
-      sky: formData.sky === '' || formData.sky === null ? 0 : parseInt(formData.sky, 10),  // Default to 0 if empty or null
+      id: uniqueId,
+      eco: formData.eco === '' || formData.eco === null ? 0 : parseInt(formData.eco, 10),
+      person: formData.person === '' || formData.person === null ? 0 : parseInt(formData.person, 10),
+      advance: formData.advance === '' || formData.advance === null ? 0 : parseInt(formData.advance, 10),
+      due_bill: formData.due_bill === '' || formData.due_bill === null ? 0 : parseInt(formData.due_bill, 10),
+      tent: formData.tent === '' || formData.tent === null ? 0 : parseInt(formData.tent, 10),
+      regular: formData.regular === '' || formData.regular === null ? 0 : parseInt(formData.regular, 10),
+      glamp: formData.glamp === '' || formData.glamp === null ? 0 : parseInt(formData.glamp, 10),
+      sky: formData.sky === '' || formData.sky === null ? 0 : parseInt(formData.sky, 10),
+      lakepod: formData.lakepod === '' ? 0 : parseInt(formData.lakepod, 10),
     };
 
     try {
       const baseUrl = process.env.REACT_APP_BASE_URL;
       const apiKey = process.env.REACT_APP_API_KEY;
-
-      console.log('Base URL:', baseUrl);
-      console.log('API Key:', apiKey);
 
       const response = await axios.post(
         `${baseUrl}/bookings`,
@@ -74,16 +76,34 @@ function App() {
       );
 
       if (response.status === 201) {
-        console.log('Booking created successfully!');
         alert('Booking created successfully!');
       } else {
-        console.error('Failed to create booking:', response.data);
         alert('Failed to create booking');
       }
     } catch (error) {
-      console.error('Error submitting booking:', error.response?.data || error.message);
-      alert(`Error creating booking: ${error.response?.data?.message || error.message}`);
+      alert(`Error creating booking: ${error.message}`);
     }
+  };
+
+  const renderNumberSelect = (name) => {
+    const options = [];
+    for (let i = 1; i <= 20; i++) {
+      options.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
+    }
+    return (
+      <select
+        name={name}
+        value={formData[name]}
+        onChange={handleChange}
+      >
+        <option value="">Select</option>
+        {options}
+      </select>
+    );
   };
 
   return (
@@ -102,60 +122,34 @@ function App() {
               required
             />
           </div>
-          <div className="form-group" style={{ display: 'flex', alignItems: 'center' }}>
-  <label style={{ marginRight: '10px' }}>Day</label> {/* Adjust margin as needed */}
-  <input
-    type="checkbox"
-    name="is_day"
-    checked={formData.is_day}
-    onChange={handleChange}
-  />
-</div>
-          <div className="form-group">
-            <label>Eco</label>
-            <input
-              type="number"
-              name="eco"
-              value={formData.eco}
-              onChange={handleChange}
-            />
+          {/* New Row for Eco, Tent, Regular, Glamp, Sky, and Lakepod */}
+          <div className="form-group-row">
+            <div className="form-group">
+              <label>Eco</label>
+              {renderNumberSelect('eco')}
+            </div>
+            <div className="form-group">
+              <label>Tent</label>
+              {renderNumberSelect('tent')}
+            </div>
+            <div className="form-group">
+              <label>Regular</label>
+              {renderNumberSelect('regular')}
+            </div>
+            <div className="form-group">
+              <label>Glamp</label>
+              {renderNumberSelect('glamp')}
+            </div>
+            <div className="form-group">
+              <label>Sky</label>
+              {renderNumberSelect('sky')}
+            </div>
+            <div className="form-group">
+              <label>Lake Pod</label>
+              {renderNumberSelect('lakepod')}
+            </div>
           </div>
-          <div className="form-group">
-            <label>Tent</label>
-            <input
-              type="number"
-              name="tent"
-              value={formData.tent}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Regular</label>
-            <input
-              type="number"
-              name="regular"
-              value={formData.regular}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Glamp</label>
-            <input
-              type="number"
-              name="glamp"
-              value={formData.glamp}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Sky</label>
-            <input
-              type="number"
-              name="sky"
-              value={formData.sky}
-              onChange={handleChange}
-            />
-          </div>
+
           <div className="form-group">
             <label>Name</label>
             <input
@@ -185,6 +179,53 @@ function App() {
               onChange={handleChange}
             />
           </div>
+
+          <div className="form-group-row">
+            <div className="form-group">
+              <label>Customized Package</label>
+              <select
+                name="is_customized"
+                value={formData.is_customized}
+                onChange={handleChange}
+              >
+                <option value="">Select</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Extra Lunch</label>
+              <input
+                type="checkbox"
+                name="is_day"
+                checked={formData.is_day}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          {formData.is_customized === 'yes' && (
+            <div className="form-group">
+              <label>Customized Package Details</label>
+              <input
+                type="text"
+                name="customized_details"
+                value={formData.customized_details}
+                onChange={handleChange}
+              />
+            </div>
+          )}
+
+          <div className="form-group">
+            <label>Nid No. (Optional)</label>
+            <input
+              type="text"
+              name="nid_no"
+              value={formData.nid_no}
+              onChange={handleChange}
+            />
+          </div>
+
           <div className="form-group">
             <label>Advance</label>
             <input
@@ -199,7 +240,7 @@ function App() {
             <label>Due Bill</label>
             <input
               type="number"
-              name="due_bill"         // Changed from dueBill
+              name="due_bill"
               value={formData.due_bill}
               onChange={handleChange}
             />
@@ -208,15 +249,26 @@ function App() {
             <label>Last 3 Digits / Payment Method</label>
             <input
               type="text"
-              name="last_digits"      // Changed from lastDigits
+              name="last_digits"
               value={formData.last_digits}
               onChange={handleChange}
             />
           </div>
-         
-         
           <button type="submit">Submit</button>
         </form>
+      </div>
+
+      {/* Images Section */}
+      <div className="image-gallery">
+        <h3>Camping Cox</h3>
+        <div className="gallery">
+          <img src={camp1} alt="Camping Spot 1" />
+          <img src={camp2} alt="Camping Spot 2" />
+          <img src={camp1} alt="Camping Spot 3" />
+          <img src={camp2} alt="Camping Spot 4" />
+          <img src={camp1} alt="Camping Spot 5" />
+          <img src={camp2} alt="Camping Spot 6" />
+        </div>
       </div>
     </div>
   );
