@@ -260,7 +260,7 @@ function App() {
 
       {/* Images Section */}
       <div className="image-gallery">
-        <h3>Camping Cox</h3>
+        <h3>Camp in Cox</h3>
         <div className="gallery">
           <img src={camp1} alt="Camping Spot 1" />
           <img src={camp2} alt="Camping Spot 2" />
