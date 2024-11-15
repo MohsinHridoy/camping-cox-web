@@ -125,7 +125,7 @@ function App() {
           {/* New Row for Eco, Tent, Regular, Glamp, Sky, and Lakepod */}
           <div className="form-group-row">
             <div className="form-group">
-              <label>Eco</label>
+              <label>Eco Pod</label>
               {renderNumberSelect('eco')}
             </div>
             <div className="form-group">
