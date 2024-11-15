@@ -20,7 +20,7 @@ function App() {
     regular: '',
     glamp: '',
     sky: '',
-    lakepod: '',
+    // lakepod: '',
     is_day: false,
     is_customized: '',
     nid_no: '',
@@ -56,7 +56,7 @@ function App() {
       regular: formData.regular === '' || formData.regular === null ? 0 : parseInt(formData.regular, 10),
       glamp: formData.glamp === '' || formData.glamp === null ? 0 : parseInt(formData.glamp, 10),
       sky: formData.sky === '' || formData.sky === null ? 0 : parseInt(formData.sky, 10),
-      lakepod: formData.lakepod === '' ? 0 : parseInt(formData.lakepod, 10),
+      // lakepod: formData.lakepod === '' ? 0 : parseInt(formData.lakepod, 10),
     };
 
     try {
@@ -87,7 +87,7 @@ function App() {
 
   const renderNumberSelect = (name) => {
     const options = [];
-    for (let i = 1; i <= 20; i++) {
+    for (let i = 1; i <= 10; i++) {
       options.push(
         <option key={i} value={i}>
           {i}
@@ -133,21 +133,18 @@ function App() {
               {renderNumberSelect('tent')}
             </div>
             <div className="form-group">
-              <label>Regular</label>
+              <label>Lake Pod</label>
               {renderNumberSelect('regular')}
             </div>
             <div className="form-group">
-              <label>Glamp</label>
+              <label>Glamping</label>
               {renderNumberSelect('glamp')}
             </div>
             <div className="form-group">
-              <label>Sky</label>
+              <label>Sky pod</label>
               {renderNumberSelect('sky')}
             </div>
-            <div className="form-group">
-              <label>Lake Pod</label>
-              {renderNumberSelect('lakepod')}
-            </div>
+         
           </div>
 
           <div className="form-group">
