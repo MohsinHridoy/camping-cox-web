@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
 import logo from './logo.jpeg';
-import camp1 from './images/camp1.jpeg'; // Import your camping images
+import camp1 from './images/camp1.jpeg';
 import camp2 from './images/camp2.jpeg';
-
 import axios from 'axios';
 
 function App() {
@@ -20,11 +19,14 @@ function App() {
     regular: '',
     glamp: '',
     sky: '',
-    // lakepod: '',
     is_day: false,
     is_customized: '',
     nid_no: '',
     customized_details: '',
+    breakfast: '',
+    lunch: '',
+    evening_snacks: '',
+    dinner: '',
   });
 
   const handleChange = (e) => {
@@ -38,8 +40,15 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.date || !formData.name || !formData.person || !formData.advance) {
-      alert('Please fill out the required fields: Date, Name, Person, and Advance.');
+    // Validation checks
+    if (
+      !formData.date ||
+      !formData.name ||
+      !formData.person ||
+      !formData.phone ||
+      !formData.advance
+    ) {
+      alert('Please fill out the required fields: Date, Name, Person, Phone, and Advance.');
       return;
     }
 
@@ -48,15 +57,18 @@ function App() {
     const transformedData = {
       ...formData,
       id: uniqueId,
-      eco: formData.eco === '' || formData.eco === null ? 0 : parseInt(formData.eco, 10),
-      person: formData.person === '' || formData.person === null ? 0 : parseInt(formData.person, 10),
-      advance: formData.advance === '' || formData.advance === null ? 0 : parseInt(formData.advance, 10),
-      due_bill: formData.due_bill === '' || formData.due_bill === null ? 0 : parseInt(formData.due_bill, 10),
-      tent: formData.tent === '' || formData.tent === null ? 0 : parseInt(formData.tent, 10),
-      regular: formData.regular === '' || formData.regular === null ? 0 : parseInt(formData.regular, 10),
-      glamp: formData.glamp === '' || formData.glamp === null ? 0 : parseInt(formData.glamp, 10),
-      sky: formData.sky === '' || formData.sky === null ? 0 : parseInt(formData.sky, 10),
-      // lakepod: formData.lakepod === '' ? 0 : parseInt(formData.lakepod, 10),
+      eco: formData.eco ? parseInt(formData.eco, 10) : 0,
+      person: formData.person ? parseInt(formData.person, 10) : 0,
+      advance: formData.advance ? parseInt(formData.advance, 10) : 0,
+      due_bill: formData.due_bill ? parseInt(formData.due_bill, 10) : 0,
+      tent: formData.tent ? parseInt(formData.tent, 10) : 0,
+      regular: formData.regular ? parseInt(formData.regular, 10) : 0,
+      glamp: formData.glamp ? parseInt(formData.glamp, 10) : 0,
+      sky: formData.sky ? parseInt(formData.sky, 10) : 0,
+      breakfast: formData.breakfast ? parseInt(formData.breakfast, 10) : 0,
+      lunch: formData.lunch ? parseInt(formData.lunch, 10) : 0,
+      evening_snacks: formData.evening_snacks ? parseInt(formData.evening_snacks, 10) : 0,
+      dinner: formData.dinner ? parseInt(formData.dinner, 10) : 0,
     };
 
     try {
@@ -68,8 +80,8 @@ function App() {
         transformedData,
         {
           headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'apikey': apiKey,
+            Authorization: `Bearer ${apiKey}`,
+            apikey: apiKey,
             'Content-Type': 'application/json',
           },
         }
@@ -85,9 +97,9 @@ function App() {
     }
   };
 
-  const renderNumberSelect = (name) => {
+  const renderNumberSelect = (name, limit) => {
     const options = [];
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= limit; i++) {
       options.push(
         <option key={i} value={i}>
           {i}
@@ -95,11 +107,7 @@ function App() {
       );
     }
     return (
-      <select
-        name={name}
-        value={formData[name]}
-        onChange={handleChange}
-      >
+      <select name={name} value={formData[name]} onChange={handleChange}>
         <option value="">Select</option>
         {options}
       </select>
@@ -122,29 +130,27 @@ function App() {
               required
             />
           </div>
-          {/* New Row for Eco, Tent, Regular, Glamp, Sky, and Lakepod */}
           <div className="form-group-row">
             <div className="form-group">
               <label>Eco Pod</label>
-              {renderNumberSelect('eco')}
+              {renderNumberSelect('eco', 10)}
             </div>
             <div className="form-group">
               <label>Tent</label>
-              {renderNumberSelect('tent')}
+              {renderNumberSelect('tent', 20)}
             </div>
             <div className="form-group">
               <label>Lake Pod</label>
-              {renderNumberSelect('regular')}
+              {renderNumberSelect('regular', 7)}
             </div>
             <div className="form-group">
               <label>Glamping</label>
-              {renderNumberSelect('glamp')}
+              {renderNumberSelect('glamp', 10)}
             </div>
             <div className="form-group">
               <label>Sky pod</label>
-              {renderNumberSelect('sky')}
+              {renderNumberSelect('sky', 1)}
             </div>
-         
           </div>
 
           <div className="form-group">
@@ -174,6 +180,43 @@ function App() {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Breakfast</label>
+            <input
+              type="number"
+              name="breakfast"
+              value={formData.breakfast}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Lunch</label>
+            <input
+              type="number"
+              name="lunch"
+              value={formData.lunch}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Evening Snacks</label>
+            <input
+              type="number"
+              name="evening_snacks"
+              value={formData.evening_snacks}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Dinner</label>
+            <input
+              type="number"
+              name="dinner"
+              value={formData.dinner}
+              onChange={handleChange}
             />
           </div>
 
@@ -190,7 +233,7 @@ function App() {
                 <option value="no">No</option>
               </select>
             </div>
-            <div className="form-group">
+            {/* <div className="form-group">
               <label>Extra Lunch</label>
               <input
                 type="checkbox"
@@ -198,7 +241,7 @@ function App() {
                 checked={formData.is_day}
                 onChange={handleChange}
               />
-            </div>
+            </div> */}
           </div>
 
           {formData.is_customized === 'yes' && (
@@ -209,19 +252,10 @@ function App() {
                 name="customized_details"
                 value={formData.customized_details}
                 onChange={handleChange}
+                placeholder="Enter package details"
               />
             </div>
           )}
-
-          <div className="form-group">
-            <label>Nid No. (Optional)</label>
-            <input
-              type="text"
-              name="nid_no"
-              value={formData.nid_no}
-              onChange={handleChange}
-            />
-          </div>
 
           <div className="form-group">
             <label>Advance</label>
@@ -255,7 +289,6 @@ function App() {
         </form>
       </div>
 
-      {/* Images Section */}
       <div className="image-gallery">
         <h3>Camp in Cox</h3>
         <div className="gallery">
