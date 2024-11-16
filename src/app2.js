@@ -6,75 +6,52 @@ import camp2 from './images/camp2.jpeg';
 import axios from 'axios';
 import Confetti from 'react-confetti';
 
-
-
-function App() {
+function App2() {
   const [formData, setFormData] = useState({
     date: '',
-    eco: '',
     name: '',
-    person: '',
     phone: '',
-    advance: '',
-    due_bill: '',
-    last_digits: '',
+    nid_no: '',
+    is_customized: 'No', // Default to 'No'
+    customized_details: '',
+    eco: '',
     tent: '',
     regular: '',
     glamp: '',
     sky: '',
-    is_day: false,
-    is_customized: '',
-    nid_no: '',
-    customized_details: '',
     breakfast: '',
     lunch: '',
     evening_snacks: '',
     dinner: '',
+    advance: '',
+    due_bill: '',
+    person: '',
   });
+
   const [showConfetti, setShowConfetti] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
-
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation checks
-    if (
-      !formData.date ||
-      !formData.name ||
-      !formData.person ||
-      !formData.phone ||
-      !formData.advance
-    ) {
-      alert('Please fill out the required fields: Date, Name, Person, Phone, and Advance.');
+    // Validation for required fields
+    if (!formData.date || !formData.name || !formData.phone || !formData.nid_no) {
+      alert('Please fill out all required fields: Date, Name, Phone, and NID.');
       return;
     }
 
     const uniqueId = `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-
     const transformedData = {
       ...formData,
       id: uniqueId,
-      eco: formData.eco ? parseInt(formData.eco, 10) : 0,
-      person: formData.person ? parseInt(formData.person, 10) : 0,
-      advance: formData.advance ? parseInt(formData.advance, 10) : 0,
-      due_bill: formData.due_bill ? parseInt(formData.due_bill, 10) : 0,
-      tent: formData.tent ? parseInt(formData.tent, 10) : 0,
-      regular: formData.regular ? parseInt(formData.regular, 10) : 0,
-      glamp: formData.glamp ? parseInt(formData.glamp, 10) : 0,
-      sky: formData.sky ? parseInt(formData.sky, 10) : 0,
-      breakfast: formData.breakfast ? parseInt(formData.breakfast, 10) : 0,
-      lunch: formData.lunch ? parseInt(formData.lunch, 10) : 0,
-      evening_snacks: formData.evening_snacks ? parseInt(formData.evening_snacks, 10) : 0,
-      dinner: formData.dinner ? parseInt(formData.dinner, 10) : 0,
     };
 
     try {
@@ -94,9 +71,10 @@ function App() {
       );
 
       if (response.status === 201) {
+        alert('Booking created successfully!');
+
         setShowConfetti(true);
         setTimeout(() => setShowConfetti(false), 30000);
-        alert('Booking created successfully!');
 
         setFormData({
           date: '',
@@ -121,8 +99,6 @@ function App() {
 
         setIsButtonDisabled(true);
         setTimeout(() => setIsButtonDisabled(false), 300000);
-
-
       } else {
         alert('Failed to create booking');
       }
@@ -149,10 +125,8 @@ function App() {
   };
 
   return (
-    <div className="App">
-   {showConfetti && <Confetti      // Adds a slight wind effect for a natural drift
-   />}
-
+    <div className="App2">
+      {showConfetti && <Confetti />}
       <div className="form-container">
         <img src={logo} alt="Logo" className="logo" />
         <h2>Booking Form</h2>
@@ -167,6 +141,58 @@ function App() {
               required
             />
           </div>
+          <div className="form-group">
+            <label>Name</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Phone</label>
+            <input
+              type="text"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>NID Number</label>
+            <input
+              type="text"
+              name="nid_no"
+              value={formData.nid_no}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Is Customized?</label>
+            <select
+              name="is_customized"
+              value={formData.is_customized}
+              onChange={handleChange}
+            >
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+            </select>
+          </div>
+          {formData.is_customized === 'Yes' && (
+            <div className="form-group">
+              <label>Customized Details</label>
+              <textarea
+                name="customized_details"
+                value={formData.customized_details}
+                onChange={handleChange}
+                rows="3"
+              />
+            </div>
+          )}
           <div className="form-group-row">
             <div className="form-group">
               <label>Eco Pod</label>
@@ -185,45 +211,14 @@ function App() {
               {renderNumberSelect('glamp', 10)}
             </div>
             <div className="form-group">
-              <label>Sky pod</label>
+              <label>Sky Pod</label>
               {renderNumberSelect('sky', 1)}
             </div>
-          </div>
-
-          <div className="form-group">
-            <label>Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Person</label>
-            <input
-              type="number"
-              name="person"
-              value={formData.person}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Phone</label>
-            <input
-              type="text"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-            />
           </div>
           <div className="form-group">
             <label>Breakfast</label>
             <input
-              type="number"
+              type="text"
               name="breakfast"
               value={formData.breakfast}
               onChange={handleChange}
@@ -232,7 +227,7 @@ function App() {
           <div className="form-group">
             <label>Lunch</label>
             <input
-              type="number"
+              type="text"
               name="lunch"
               value={formData.lunch}
               onChange={handleChange}
@@ -241,7 +236,7 @@ function App() {
           <div className="form-group">
             <label>Evening Snacks</label>
             <input
-              type="number"
+              type="text"
               name="evening_snacks"
               value={formData.evening_snacks}
               onChange={handleChange}
@@ -250,58 +245,19 @@ function App() {
           <div className="form-group">
             <label>Dinner</label>
             <input
-              type="number"
+              type="text"
               name="dinner"
               value={formData.dinner}
               onChange={handleChange}
             />
           </div>
-
-          <div className="form-group-row">
-            <div className="form-group">
-              <label>Customized Package</label>
-              <select
-                name="is_customized"
-                value={formData.is_customized}
-                onChange={handleChange}
-              >
-                <option value="">Select</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </select>
-            </div>
-            {/* <div className="form-group">
-              <label>Extra Lunch</label>
-              <input
-                type="checkbox"
-                name="is_day"
-                checked={formData.is_day}
-                onChange={handleChange}
-              />
-            </div> */}
-          </div>
-
-          {formData.is_customized === 'yes' && (
-            <div className="form-group">
-              <label>Customized Package Details</label>
-              <input
-                type="text"
-                name="customized_details"
-                value={formData.customized_details}
-                onChange={handleChange}
-                placeholder="Enter package details"
-              />
-            </div>
-          )}
-
           <div className="form-group">
-            <label>Advance</label>
+            <label>Advance Payment</label>
             <input
               type="number"
               name="advance"
               value={formData.advance}
               onChange={handleChange}
-              required
             />
           </div>
           <div className="form-group">
@@ -314,19 +270,17 @@ function App() {
             />
           </div>
           <div className="form-group">
-            <label>Last 3 Digits / Payment Method</label>
+            <label>Total Persons</label>
             <input
-              type="text"
-              name="last_digits"
-              value={formData.last_digits}
+              type="number"
+              name="person"
+              value={formData.person}
               onChange={handleChange}
             />
           </div>
           <button type="submit" disabled={isButtonDisabled}>
             {isButtonDisabled ? 'Please wait 5 minutes...' : 'Submit'}
           </button>
-
-
         </form>
       </div>
 
@@ -335,14 +289,10 @@ function App() {
         <div className="gallery">
           <img src={camp1} alt="Camping Spot 1" />
           <img src={camp2} alt="Camping Spot 2" />
-          <img src={camp1} alt="Camping Spot 3" />
-          <img src={camp2} alt="Camping Spot 4" />
-          <img src={camp1} alt="Camping Spot 5" />
-          <img src={camp2} alt="Camping Spot 6" />
         </div>
       </div>
     </div>
   );
 }
 
-export default App;
+export default App2;
