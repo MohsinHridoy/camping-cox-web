@@ -230,13 +230,12 @@ function App() {
               required
             />
           </div>
-       
           <div className="form-group">
-            <label>Lunch</label>
+            <label>Dinner</label>
             <input
               type="number"
-              name="lunch"
-              value={formData.lunch}
+              name="dinner"
+              value={formData.dinner}
               onChange={handleChange}
             />
           </div>
@@ -249,15 +248,18 @@ function App() {
               onChange={handleChange}
             />
           </div>
+          
           <div className="form-group">
-            <label>Dinner</label>
+            <label>Lunch</label>
             <input
               type="number"
-              name="dinner"
-              value={formData.dinner}
+              name="lunch"
+              value={formData.lunch}
               onChange={handleChange}
             />
           </div>
+       
+      
           <div className="form-group">
             <label>Breakfast</label>
             <input
