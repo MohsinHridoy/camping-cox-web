@@ -17,6 +17,7 @@
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px; /* Space below form */
+  box-sizing: border-box; /* Ensure padding is included in width */
 }
 
 /* Logo styling */
@@ -46,6 +47,7 @@ form {
 /* General form group styling */
 .form-group {
   margin-bottom: 15px;
+  box-sizing: border-box; /* Include padding in width calculation */
 }
 
 .form-group label {
@@ -61,6 +63,7 @@ form {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
+  box-sizing: border-box; /* Ensure padding is inside the width */
 }
 
 /* Button styling */
@@ -70,9 +73,11 @@ button {
   color: white;
   border: none;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 24px;
   cursor: pointer;
   margin-top: 15px;
+  transition: background-color 0.3s ease;
+
 }
 
 button:hover {
@@ -82,16 +87,30 @@ button:hover {
 /* Responsive form group row layout */
 .form-group-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 15px;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Allow wrapping */
+  width: 100%; /* Ensure no overflow */
 }
-
+.confetti-container {
+  position: fixed;
+  top: 120px;
+  left: 0;
+  z-index: 9999; /* Make sure it's on top of other elements */
+  pointer-events: none; /* Prevents confetti from blocking clicks */
+}
+button:disabled {
+  background-color: #cccccc; /* Disable color when button is disabled */
+  cursor: not-allowed;
+}
+/* Form group items layout */
 .form-group {
   display: flex;
   flex-direction: column;
   flex: 1;
-  min-width: 120px;
+  min-width: 120px; /* Keep minimum width for readability */
+  max-width: 100%; /* Ensure form groups do not exceed container width */
+  flex-shrink: 1; /* Allow the items to shrink if necessary */
 }
 
 select {
@@ -101,6 +120,40 @@ select {
 
 input[type="checkbox"] {
   margin-left: 10px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .form-container {
+    padding: 10px;
+  }
+
+  .form-group input,
+  .form-group select {
+    font-size: 14px;
+    padding: 6px;
+  }
+
+  button {
+    font-size: 14px;
+  }
+
+  .logo {
+    width: 80px; /* Smaller logo on mobile */
+    height: 80px;
+  }
+
+  .form-group-row {
+    gap: 10px; /* Reduced gap for better fit */
+    justify-content: flex-start; /* Align items to the left */
+    flex-wrap: wrap; /* Ensure wrapping of items */
+    width: 100%; /* Ensure no horizontal overflow */
+  }
+
+  .form-group {
+    min-width: 100px; /* Ensure they fit within smaller screens */
+    flex-shrink: 1; /* Allow items to shrink */
+  }
 }
 
 /* Image gallery styling */
@@ -135,29 +188,6 @@ input[type="checkbox"] {
 
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
-  .form-container {
-    padding: 10px;
-  }
-
-  .form-group input,
-  .form-group select {
-    font-size: 14px;
-    padding: 6px;
-  }
-
-  button {
-    font-size: 14px;
-  }
-
-  .logo {
-    width: 80px; /* Smaller logo on mobile */
-    height: 80px;
-  }
-
-  .form-group-row {
-    flex-direction: column; /* Stack items in rows on smaller screens */
-  }
-
   .gallery img {
     width: 100%;
     height: auto; /* Full-width images on mobile */

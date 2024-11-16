@@ -95,7 +95,7 @@ function App() {
 
       if (response.status === 201) {
         setShowConfetti(true);
-        setTimeout(() => setShowConfetti(false), 30000);
+        setTimeout(() => setShowConfetti(false), 60000);
         alert('Booking created successfully!');
 
         setFormData({
@@ -120,7 +120,7 @@ function App() {
         });
 
         setIsButtonDisabled(true);
-        setTimeout(() => setIsButtonDisabled(false), 300000);
+        setTimeout(() => setIsButtonDisabled(false), 60000);
 
 
       } else {
@@ -150,15 +150,25 @@ function App() {
 
   return (
     <div className="App">
-   {showConfetti && <Confetti      // Adds a slight wind effect for a natural drift
-   />}
+   {showConfetti && (
+        <div className="confetti-container">
+          <Confetti
+            width={window.innerWidth}
+            height={window.innerHeight}
+         
+          />
+        </div>
+      )}
 
       <div className="form-container">
+      {showConfetti && <Confetti      height={window.innerHeight} // Full height of the screen
+    // Adds a slight wind effect for a natural drift
+   />}
         <img src={logo} alt="Logo" className="logo" />
         <h2>Booking Form</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Date (YYYY-MM-DD)</label>
+            <label>Date</label>
             <input
               type="date"
               name="date"
@@ -220,15 +230,7 @@ function App() {
               required
             />
           </div>
-          <div className="form-group">
-            <label>Breakfast</label>
-            <input
-              type="number"
-              name="breakfast"
-              value={formData.breakfast}
-              onChange={handleChange}
-            />
-          </div>
+       
           <div className="form-group">
             <label>Lunch</label>
             <input
@@ -256,7 +258,15 @@ function App() {
               onChange={handleChange}
             />
           </div>
-
+          <div className="form-group">
+            <label>Breakfast</label>
+            <input
+              type="number"
+              name="breakfast"
+              value={formData.breakfast}
+              onChange={handleChange}
+            />
+          </div>
           <div className="form-group-row">
             <div className="form-group">
               <label>Customized Package</label>
@@ -323,7 +333,7 @@ function App() {
             />
           </div>
           <button type="submit" disabled={isButtonDisabled}>
-            {isButtonDisabled ? 'Please wait 5 minutes...' : 'Submit'}
+            {isButtonDisabled ? 'Please wait 1 minutes...' : 'Submit'}
           </button>
 
 
