@@ -161,9 +161,9 @@ function App() {
       )}
 
       <div className="form-container">
-      {showConfetti && <Confetti      height={window.innerHeight} // Full height of the screen
+      {/* {showConfetti && <Confetti      height={window.innerHeight} // Full height of the screen
     // Adds a slight wind effect for a natural drift
-   />}
+   />} */}
         <img src={logo} alt="Logo" className="logo" />
         <h2>Booking Form</h2>
         <form onSubmit={handleSubmit}>
