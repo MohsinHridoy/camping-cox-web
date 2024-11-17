@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import logo from './logo.jpeg';
-import camp1 from './images/camp1.jpeg';
-import camp2 from './images/camp2.jpeg';
+
 import axios from 'axios';
 import Confetti from 'react-confetti';
 
@@ -23,11 +22,13 @@ function App() {
     glamp: '',
     sky: '',
     is_day: false,
-    is_customized: '',
+    is_customized: 'no', // Set default to 'no' to ensure a value is always present
     nid_no: '',
     customized_details: '',
     breakfast: '',
     lunch: '',
+    barbeque: '', 
+
     evening_snacks: '',
     dinner: '',
   });
@@ -73,10 +74,15 @@ function App() {
       sky: formData.sky ? parseInt(formData.sky, 10) : 0,
       breakfast: formData.breakfast ? parseInt(formData.breakfast, 10) : 0,
       lunch: formData.lunch ? parseInt(formData.lunch, 10) : 0,
+
       evening_snacks: formData.evening_snacks ? parseInt(formData.evening_snacks, 10) : 0,
       dinner: formData.dinner ? parseInt(formData.dinner, 10) : 0,
-    };
+      barbeque: formData.barbeque ? parseInt(formData.barbeque, 10) : 0, // Ensure it's a number
 
+    };
+    console.log('Base URL:', process.env.REACT_APP_BASE_URL);
+    console.log('API Key:', process.env.REACT_APP_API_KEY);
+    
     try {
       const baseUrl = process.env.REACT_APP_BASE_URL;
       const apiKey = process.env.REACT_APP_API_KEY;
@@ -231,24 +237,49 @@ function App() {
             />
           </div>
           <div className="form-group">
-            <label>Dinner</label>
+  <label>NID No.</label>
+  <input
+    type="text"
+    name="nid_no" // Correctly updated to match the state property
+    value={formData.nid_no} // Links to the correct state property
+    onChange={handleChange}
+    
+  />
+</div>
+
+<div className="form-group">
+            <label>Advance</label>
             <input
               type="number"
-              name="dinner"
-              value={formData.dinner}
+              name="advance"
+              value={formData.advance}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Due Bill</label>
+            <input
+              type="number"
+              name="due_bill"
+              value={formData.due_bill}
               onChange={handleChange}
             />
           </div>
           <div className="form-group">
-            <label>Evening Snacks</label>
+            <label>Last 3 Digits </label>
             <input
-              type="number"
-              name="evening_snacks"
-              value={formData.evening_snacks}
+              type="text"
+              name="last_digits"
+              value={formData.last_digits}
               onChange={handleChange}
             />
           </div>
-          
+
+          <h3>Select Your Food</h3>
+
+
+
           <div className="form-group">
             <label>Lunch</label>
             <input
@@ -258,6 +289,36 @@ function App() {
               onChange={handleChange}
             />
           </div>
+          <div className="form-group">
+            <label>Snacks</label>
+            <input
+              type="number"
+              name="evening_snacks"
+              value={formData.evening_snacks}
+              onChange={handleChange}
+            />
+          </div>
+          
+          <div className="form-group">
+            <label>Dinner</label>
+            <input
+              type="number"
+              name="dinner"
+              value={formData.dinner}
+              onChange={handleChange}
+            />
+          </div>
+        
+          <div className="form-group">
+        <label>Barbeque</label>
+           <input
+            type="number"
+            name="barbeque" // Corrected state property name
+            value={formData.barbeque} // Corrected state binding
+          onChange={handleChange}
+             />
+             </div> 
+
        
       
           <div className="form-group">
@@ -306,34 +367,7 @@ function App() {
             </div>
           )}
 
-          <div className="form-group">
-            <label>Advance</label>
-            <input
-              type="number"
-              name="advance"
-              value={formData.advance}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Due Bill</label>
-            <input
-              type="number"
-              name="due_bill"
-              value={formData.due_bill}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Last 3 Digits / Payment Method</label>
-            <input
-              type="text"
-              name="last_digits"
-              value={formData.last_digits}
-              onChange={handleChange}
-            />
-          </div>
+       
           <button type="submit" disabled={isButtonDisabled}>
             {isButtonDisabled ? 'Please wait 1 minutes...' : 'Submit'}
           </button>
@@ -342,17 +376,7 @@ function App() {
         </form>
       </div>
 
-      <div className="image-gallery">
-        <h3>Camp in Cox</h3>
-        <div className="gallery">
-          <img src={camp1} alt="Camping Spot 1" />
-          <img src={camp2} alt="Camping Spot 2" />
-          <img src={camp1} alt="Camping Spot 3" />
-          <img src={camp2} alt="Camping Spot 4" />
-          <img src={camp1} alt="Camping Spot 5" />
-          <img src={camp2} alt="Camping Spot 6" />
-        </div>
-      </div>
+     
     </div>
   );
 }

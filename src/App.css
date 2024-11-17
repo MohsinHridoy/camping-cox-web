@@ -94,7 +94,7 @@ button:hover {
 }
 .confetti-container {
   position: fixed;
-  top: 120px;
+  top: 1px;
   left: 0;
   z-index: 9999; /* Make sure it's on top of other elements */
   pointer-events: none; /* Prevents confetti from blocking clicks */
