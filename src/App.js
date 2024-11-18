@@ -278,8 +278,8 @@ function App() {
 
           <h3>Select your food quantity</h3>
 
-
-
+          <div className="form-group-row">
+            
           <div className="form-group">
             <label>Lunch</label>
             <input
@@ -298,7 +298,6 @@ function App() {
               onChange={handleChange}
             />
           </div>
-          
           <div className="form-group">
             <label>Dinner</label>
             <input
@@ -308,6 +307,14 @@ function App() {
               onChange={handleChange}
             />
           </div>
+          </div>
+
+
+        
+         
+          <div className="form-group-row">
+
+         
         
           <div className="form-group">
         <label>Barbeque</label>
@@ -319,8 +326,7 @@ function App() {
              />
              </div> 
 
-       
-      
+             
           <div className="form-group">
             <label>Breakfast</label>
             <input
@@ -330,6 +336,11 @@ function App() {
               onChange={handleChange}
             />
           </div>
+          </div>
+
+
+       
+      
           <div className="form-group-row">
             <div className="form-group">
               <label>Customized Package</label>
