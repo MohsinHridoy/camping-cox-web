@@ -276,7 +276,7 @@ function App() {
             />
           </div>
 
-          <h3>Select Your Food</h3>
+          <h3>Select your food quantity</h3>
 
 
 
