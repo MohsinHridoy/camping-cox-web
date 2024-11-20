@@ -236,7 +236,7 @@ function App() {
               required
             />
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
   <label>NID No.</label>
   <input
     type="text"
@@ -244,8 +244,8 @@ function App() {
     value={formData.nid_no} // Links to the correct state property
     onChange={handleChange}
     
-  />
-</div>
+  /> */}
+{/* </div> */}
 
 <div className="form-group">
             <label>Advance</label>
