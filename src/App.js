@@ -21,6 +21,8 @@ function App() {
     regular: '',
     glamp: '',
     sky: '',
+        valley: '',
+
     is_day: false,
     is_customized: 'no', // Set default to 'no' to ensure a value is always present
     nid_no: '',
@@ -72,6 +74,8 @@ function App() {
       regular: formData.regular ? parseInt(formData.regular, 10) : 0,
       glamp: formData.glamp ? parseInt(formData.glamp, 10) : 0,
       sky: formData.sky ? parseInt(formData.sky, 10) : 0,
+            valley: formData.sky ? parseInt(formData.valley, 10) : 0,
+
       breakfast: formData.breakfast ? parseInt(formData.breakfast, 10) : 0,
       lunch: formData.lunch ? parseInt(formData.lunch, 10) : 0,
 
@@ -116,6 +120,8 @@ function App() {
           regular: '',
           glamp: '',
           sky: '',
+                    valley: '',
+
           breakfast: '',
           lunch: '',
           evening_snacks: '',
@@ -203,6 +209,10 @@ function App() {
             <div className="form-group">
               <label>Sky pod</label>
               {renderNumberSelect('sky', 1)}
+            </div>
+               <div className="form-group">
+              <label>Valley</label>
+              {renderNumberSelect('valley', 1)}
             </div>
           </div>
 
