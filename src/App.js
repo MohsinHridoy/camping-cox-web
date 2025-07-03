@@ -74,7 +74,7 @@ function App() {
       regular: formData.regular ? parseInt(formData.regular, 10) : 0,
       glamp: formData.glamp ? parseInt(formData.glamp, 10) : 0,
       sky: formData.sky ? parseInt(formData.sky, 10) : 0,
-            valley: formData.sky ? parseInt(formData.valley, 10) : 0,
+            valley: formData.valley ? parseInt(formData.valley, 10) : 0,
 
       breakfast: formData.breakfast ? parseInt(formData.breakfast, 10) : 0,
       lunch: formData.lunch ? parseInt(formData.lunch, 10) : 0,
