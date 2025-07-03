@@ -212,7 +212,7 @@ function App() {
             </div>
                <div className="form-group">
               <label>Valley</label>
-              {renderNumberSelect('valley', 1)}
+              {renderNumberSelect('valley', 5)}
             </div>
           </div>
 
